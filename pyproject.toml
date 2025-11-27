@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synkyria"
+version = "1.0.0"
+description = "Synkyria Monitor Core v1.0.0 – finite-horizon stability guardian for training runs."
+readme = "README.md"
+requires-python = ">=3.9"
+
+authors = [
+  { name = "Panagiotis Kalomoirakis", email = "pkalomoirakis@gmail.com" },
+]
+
+dependencies = [
+  "numpy>=1.22",
+]
+
+
+license = { text = "LICENSE" }
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+"Homepage" = "https://example.com/synkyria-monitor-core"

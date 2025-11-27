@@ -1,0 +1,17 @@
+Synkyria Monitor – Core v1.0.0
+Copyright (c) 2025, Panagiotis Kalomoirakis. All rights reserved.
+
+This software is provided as a source-available, non-exclusive license
+for research, evaluation, and internal pilot use only.
+
+You MAY:
+- Install and run the software internally.
+- Use it for research, prototyping, and internal proof-of-concept pilots.
+- Reference it in academic or technical work with proper citation.
+
+You MAY NOT:
+- Incorporate this software, in whole or in part, into any commercial
+  product or paid service without prior written permission.
+- Redistribute, sublicense, or sell the software or any modified version.
+- Remove or alter copyright and attribution notices.
+
