@@ -268,7 +268,6 @@ but the core logic is purposely simple and framework-agnostic.
 
 ---
 
-## 7. License
 
 ## 7. License
 
@@ -286,13 +285,24 @@ See the `LICENSE` file in the repository for the full terms.
 
 ---
 
-## 8. Citation (optional)
+## 8. Citation
 
-If you use **Synkyria Monitor** in academic work or internal reports, you can cite it as:
+If you use **Synkyria Monitor – Core** in academic work or internal reports,
+please cite:
 
-> P. Kalomoirakis, *Synkyria Monitor – Finite-Horizon Stability as an Architectural Framework*, 2025.
+> P. Kalomoirakis, *Synkyria Monitor -- Core v1.0.1: A Minimal Finite-Horizon Stability Companion*, Zenodo (2025). DOI: [10.5281/zenodo.17740804](https://doi.org/10.5281/zenodo.17740804).
 
-(Full BibTeX entry can be added here once the corresponding paper / preprint is public.)
+BibTeX:
+
+```bibtex
+@misc{kalomoirakis2025synkyria_monitor_core,
+  author       = {Kalomoirakis, Panagiotis},
+  title        = {Synkyria Monitor -- Core v1.0.1: A Minimal Finite-Horizon Stability Companion},
+  year         = {2025},
+  howpublished = {\url{https://doi.org/10.5281/zenodo.17740804}},
+  doi          = {10.5281/zenodo.17740804},
+  note         = {Software package},
+}
 
 ---
 
