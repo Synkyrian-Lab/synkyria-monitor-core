@@ -1,5 +1,5 @@
 
-# Synkyria Monitor – Core v1.0.0
+# Synkyria Monitor – Core v1.0.1
 
 > Finite-horizon stability monitor for deep learning training runs.  
 > Detects doomed trajectories early, tolerates transient shocks, and saves compute.
