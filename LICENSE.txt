@@ -1,17 +1,36 @@
 Synkyria Monitor – Core v1.0.0
-Copyright (c) 2025, Panagiotis Kalomoirakis. All rights reserved.
+Copyright (c) 2025, Panagiotis Kalomoirakis
 
-This software is provided as a source-available, non-exclusive license
-for research, evaluation, and internal pilot use only.
+Custom Non-Commercial Research and Teaching License
+
+This software is provided as source-available under the following terms.
 
 You MAY:
 - Install and run the software internally.
-- Use it for research, prototyping, and internal proof-of-concept pilots.
-- Reference it in academic or technical work with proper citation.
+- Use it for non-commercial research, experimentation, teaching,
+  and internal proof-of-concept pilots.
+- Redistribute unmodified copies of the software for non-commercial
+  research and teaching, provided that this license text is included
+  in full and proper attribution is given to the original author.
+- Publish or share modified versions of the software for non-commercial
+  research and teaching, provided that:
+  (a) the original work is clearly acknowledged, and
+  (b) your modifications are distributed under this same license
+      or a compatible non-commercial license.
 
 You MAY NOT:
 - Incorporate this software, in whole or in part, into any commercial
-  product or paid service without prior written permission.
-- Redistribute, sublicense, or sell the software or any modified version.
+  product or paid service without prior written permission from the
+  copyright holder.
+- Redistribute this software or any derivative work under a license
+  that permits commercial use.
 - Remove or alter copyright and attribution notices.
 
+Disclaimer:
+This software is provided "as is", without warranty of any kind,
+express or implied, including but not limited to the warranties of
+merchantability, fitness for a particular purpose, and noninfringement.
+In no event shall the author be liable for any claim, damages,
+or other liability, whether in an action of contract, tort, or otherwise,
+arising from, out of, or in connection with the software or the use
+or other dealings in the software.
