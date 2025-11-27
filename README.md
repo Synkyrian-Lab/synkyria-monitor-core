@@ -4,6 +4,8 @@
 > Finite-horizon stability monitor for deep learning training runs.  
 > Detects doomed trajectories early, tolerates transient shocks, and saves compute.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17740804.svg)](https://doi.org/10.5281/zenodo.17740804)
+
 ---
 
 ## 1. What is Synkyria Monitor?
