@@ -35,6 +35,10 @@ instead, they act as operational surrogates that capture crisis intensity (CRQ) 
 short-term held coherence (SCP) in a simple, conservative way that is practical for
 real training logs.
 
+For a theory-first overview of the Synkyrian framework behind this monitor,
+see [THEORY.md](./THEORY.md).
+
+
 Based on these indices, the monitor exposes a small **governance layer**:
 
 - **Status**: `WARMUP`, `HEALTHY`, `RISK`, `HOLDING`, `COLLAPSE`, `CHRONIC_FAILURE`
@@ -42,6 +46,7 @@ Based on these indices, the monitor exposes a small **governance layer**:
   - `"NONE"` – keep going  
   - `"REDUCE_LR"` – apply “therapy” (typically halve the learning rate)  
   - `"STOP"` – kill the run (zombie / doomed trajectory)
+
 
 The goal is simple:
 
