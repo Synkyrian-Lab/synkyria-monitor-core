@@ -1,4 +1,3 @@
-
 # Synkyria Monitor – Core v1.0.1
 
 > Finite-horizon stability monitor for deep learning training runs.  
@@ -20,6 +19,18 @@ canonical indices:
 
 - **SCP – Suspended Coherence Pulse**  
   Measures how well validation performance is being “held” over a short window.
+
+Conceptually, Synkyria Monitor is an applied, finite-horizon stability dashboard
+inspired by the Synkyrian holding framework. In the underlying theory, the
+canonical quantity is the rigorous finite-horizon holding index
+
+\[ H_{\mathrm{rig}}(x;T) = -\frac{1}{T}\log q_T(x), \]
+
+which measures how “expensive” it is for a run to fail before a time horizon T.
+The indices CRQ and SCP implemented here do not attempt to estimate
+\(H_{\mathrm{rig}}\) directly; instead, they act as operational surrogates that
+capture crisis intensity (CRQ) and short-term held coherence (SCP) in a simple,
+conservative way that is practical for real training logs.
 
 Based on these indices, the monitor exposes a small **governance layer**:
 
@@ -288,11 +299,11 @@ See the `LICENSE` file in the repository for the full terms.
 ## 8. Citation
 
 If you use **Synkyria Monitor – Core** in academic work or internal reports,
-please cite:
+please cite the software release:
 
-> P. Kalomoirakis, *Synkyria Monitor -- Core v1.0.1: A Minimal Finite-Horizon Stability Companion*, Zenodo (2025). DOI: [10.5281/zenodo.17740804](https://doi.org/10.5281/zenodo.17740804).
-
-BibTeX:
+> Kalomoirakis, P. (2025). *Synkyria Monitor -- Core v1.0.1:
+> A Minimal Finite-Horizon Stability Companion* [Software]. Zenodo.
+> https://doi.org/10.5281/zenodo.17740804
 
 ```bibtex
 @misc{kalomoirakis2025synkyria_monitor_core,
