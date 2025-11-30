@@ -21,10 +21,12 @@ canonical indices:
   Measures how well validation performance is being “held” over a short window.
 
 Conceptually, Synkyria Monitor is an applied, finite-horizon stability dashboard
-inspired by the Synkyrian holding framework. In the underlying theory, the
-canonical quantity is the rigorous finite-horizon holding index
+inspired by the Synkyrian holding framework. In the underlying theory, the canonical quantity is the rigorous
+finite-horizon holding index
 
-\[ H_{\mathrm{rig}}(x;T) = -\frac{1}{T}\log q_T(x), \]
+$$
+H_{\mathrm{rig}}(x; T) = -\frac{1}{T}\log q_T(x)
+$$
 
 which measures how “expensive” it is for a run to fail before a time horizon T.
 The indices CRQ and SCP implemented here do not attempt to estimate
