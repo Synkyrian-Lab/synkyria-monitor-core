@@ -41,9 +41,9 @@ The **rigorous finite-horizon holding index** is then
 
 $$
 H_{\mathrm{rig}}(x;T)
-\:=\
--\frac{1}{T}\\log q_T(x).
+:= -\frac{1}{T}\log q_T(x).
 $$
+
 
 Intuitively:
 
