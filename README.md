@@ -30,7 +30,7 @@ $$
 
 which measures how “expensive” it is for a run to fail before a time horizon T.
 The indices CRQ and SCP implemented here do not attempt to estimate
-\(H_{\mathrm{rig}}\) directly; instead, they act as operational surrogates that
+$$H_{\mathrm{rig}}$$ directly; instead, they act as operational surrogates that
 capture crisis intensity (CRQ) and short-term held coherence (SCP) in a simple,
 conservative way that is practical for real training logs.
 
