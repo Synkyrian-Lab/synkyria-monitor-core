@@ -1,3 +1,4 @@
+
 # Synkyria Monitor – Core v1.0.1
 
 > Finite-horizon stability monitor for deep learning training runs.  
@@ -28,11 +29,11 @@ $$
 H_{\mathrm{rig}}(x; T) = -\frac{1}{T}\log q_T(x)
 $$
 
-which measures how “expensive” it is for a run to fail before a time horizon T.
-The indices CRQ and SCP implemented here do not attempt to estimate
-$$H_{\mathrm{rig}}$$ directly; instead, they act as operational surrogates that
-capture crisis intensity (CRQ) and short-term held coherence (SCP) in a simple,
-conservative way that is practical for real training logs.
+which measures how “expensive” it is for a run to fail before a time horizon $T$.
+The indices CRQ and SCP implemented here do not attempt to estimate $H_{\mathrm{rig}}$ directly;
+instead, they act as operational surrogates that capture crisis intensity (CRQ) and
+short-term held coherence (SCP) in a simple, conservative way that is practical for
+real training logs.
 
 Based on these indices, the monitor exposes a small **governance layer**:
 
@@ -64,7 +65,7 @@ source .venv/bin/activate   # on macOS / Linux
 # Install the library locally
 pip install --upgrade pip
 pip install .
-```
+````
 
 To verify the installation:
 
@@ -281,20 +282,18 @@ but the core logic is purposely simple and framework-agnostic.
 
 ---
 
-
 ## 7. License
 
-Synkyria Monitor – Core v1.0.0 is released under a **custom source-available license**
+Synkyria Monitor – Core v1.0.1 is released under a **custom source-available license**
 intended for research, evaluation, and internal pilot use only.
 
 In short:
 
-- You **may** use it internally for research, prototyping, and proof-of-concept pilots.
-- You **may not** incorporate it into commercial products or paid services, or
+* You **may** use it internally for research, prototyping, and proof-of-concept pilots.
+* You **may not** incorporate it into commercial products or paid services, or
   redistribute/sublicense it, without prior written permission.
 
 See the `LICENSE` file in the repository for the full terms.
-
 
 ---
 
@@ -305,7 +304,7 @@ please cite the software release:
 
 > Kalomoirakis, P. (2025). *Synkyria Monitor -- Core v1.0.1:
 > A Minimal Finite-Horizon Stability Companion* [Software]. Zenodo.
-> https://doi.org/10.5281/zenodo.17740804
+> [https://doi.org/10.5281/zenodo.17740804](https://doi.org/10.5281/zenodo.17740804)
 
 ```bibtex
 @misc{kalomoirakis2025synkyria_monitor_core,
@@ -316,6 +315,6 @@ please cite the software release:
   doi          = {10.5281/zenodo.17740804},
   note         = {Software package},
 }
+```
 
----
 

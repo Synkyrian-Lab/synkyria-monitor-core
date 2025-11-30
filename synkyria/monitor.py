@@ -2,7 +2,7 @@
 synkyria.monitor
 ----------------
 
-Core monitoring engine for the Synkyria Monitor – v1.0 (Core).
+Core monitoring engine for the Synkyria Monitor – v1.0.1 (Core).
 
 This module implements a lightweight, production-ready companion that
 tracks training dynamics over a short sliding window and emits
@@ -85,7 +85,7 @@ class CompanionState:
 
 
 # ---------------------------------------------------------------------------
-# Core engine – v1.0
+# Core engine – v1.0.1
 # ---------------------------------------------------------------------------
 
 class SynkyrianTrainingCompanion:
@@ -226,7 +226,7 @@ class SynkyrianTrainingCompanion:
         scp = float(max(0.0, 1.0 - (val_drop * self.scp_sensitivity)))
 
         # ----------------------------
-        # 3. Governance Logic (v1.0)
+        # 3. Governance Logic (v1.0.1)
         # ----------------------------
         status = "HEALTHY"
         action = "NONE"

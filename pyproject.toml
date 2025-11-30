@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "synkyria"
-version = "1.0.0"
+version = "1.0.1"
 description = "Synkyria Monitor Core v1.0.0 – finite-horizon stability guardian for training runs."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -33,4 +33,4 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://example.com/synkyria-monitor-core"
+"Homepage" = "https://github.com/Synkyrian-Lab/synkyria-monitor-core"
