@@ -35,7 +35,7 @@ instead, they act as operational surrogates that capture crisis intensity (CRQ) 
 short-term held coherence (SCP) in a simple, conservative way that is practical for
 real training logs.
 
-For a theory-first overview of the Synkyrian framework behind this monitor,
+>For a theory-first overview of the Synkyrian framework behind this monitor,
 see [THEORY.md](./THEORY.md).
 
 
