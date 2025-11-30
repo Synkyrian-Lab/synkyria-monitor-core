@@ -1,151 +1,225 @@
-# Synkyrian Theory Background
+# Synkyrian Theory Background for Synkyria Monitor – Core v1.0.1
 
-This repository implements a **practical, minimal dashboard** for finite-horizon
-stability in training runs. Internally, however, it is aligned with a broader
-theoretical programme: **Synkyrian Stability and Holding**.
+This document gives a compact, theory-first overview of the Synkyrian framework
+underlying **Synkyria Monitor – Core v1.0.1**.  
+It is not required to *use* the library, but it explains where the ideas
+(CRQ, SCP, finite-horizon viability) come from and how they relate to the
+broader Synkyrian programme.
 
-The goal of this document is not to reproduce the full theory, but to make clear:
+The relevant references are:
 
-- what the *canonical* Synkyrian quantity is,
-- how the Monitor’s indices (CRQ, SCP) relate to it,
-- and how this software connects to the surrounding papers and tools.
+- **Synkyrian Stability as an Architectural Framework:  
+  From Classical Risk Tools to Viability, Latency, and Morphogenesis**  
+  (Kalomoirakis, 2025, Zenodo preprint)
 
----
+- **Tropic Information Theory: Information as Holding Load and  
+  the Necessity of Selective Deletion** (Kalomoirakis, 2025, preprint)
 
-## 1. Canonical holding index \(H_{\mathrm{rig}}\)
+- **Synkyrian Geometric Morphogenesis: Hazard Landscapes, Information Weight,  
+  and Tropic Holding** (Kalomoirakis, 2025, preprint)
 
-At the theoretical level, the core quantity is the **rigorous finite-horizon
-holding index**:
+- **Minimal Synkyrian Training Companion (v1.0)** and  
+  **Synkyria Monitor – Core v1.0.1** (software releases on Zenodo)
 
-\[
-H_{\mathrm{rig}}(x; T)
-\;:=\;
--\,\frac{1}{T}\,\log q_T(x),
-\]
-
-where
-
-- \(x \in X\) is an initial state (or configuration),
-- \(F \subset X\) is a set of failure states,
-- \(\tau_F\) is the first hitting time of \(F\),
-- and \(q_T(x) = \mathbb{P}_x(\tau_F \le T)\) is the probability that the system
-  fails before time \(T\).
-
-Intuitively, \(H_{\mathrm{rig}}(x;T)\) measures **how “expensive” it is for the
-system to collapse** before the horizon \(T\):
-
-- large \(H_{\mathrm{rig}}\)  → failure before \(T\) is rare (strong holding),
-- small \(H_{\mathrm{rig}}\)  → failure before \(T\) is likely (weak holding).
-
-In the Synkyrian framework, \(H_{\mathrm{rig}}\) plays the role of a **canonical
-reference functional**:
-
-- it is defined at the level of trajectories and failure sets,
-- classical risk tools (first-passage bounds, spectral inequalities, MEPP-style
-  principles) can be interpreted in relation to it,
-- and any *surrogate* index that claims to measure “holding” can be compared
-  against \(H_{\mathrm{rig}}\) via axioms and bounds.
-
-The paper
-
-> P. Kalomoirakis, *Synkyrian Stability as an Architectural Framework:  
-> From Classical Risk Tools to Viability, Latency, and Morphogenesis*, Zenodo (2025).
-
-develops this picture in detail, including kernel bottlenecks, latency-aware
-indices, and morphogenetic interpretations of finite-horizon hazard.
 
 ---
 
-## 2. CRQ and SCP as operational surrogates
+## 1. Rigorous finite-horizon holding index
 
-The **Synkyria Monitor – Core** does *not* attempt to estimate
-\(H_{\mathrm{rig}}\) directly from sparse training signals. That would require
-a much richer probabilistic and geometric modelling layer.
+In the Synkyrian stability paper, a stochastic system is modelled as a
+Markov process on a state space $X$ with a set of failure states $F \subset X$.
+For an initial condition $x \in X$ and a time horizon $T > 0$, we define the
+failure probability
 
-Instead, the Monitor implements two **operational surrogates**:
+$$
+q_T(x) \=\ \mathbb{P}_x\bigl(\tau_F \le T\bigr),
+$$
+
+where $\tau_F$ is the first hitting time of the failure set $F$.
+
+The **rigorous finite-horizon holding index** is then
+
+$$
+H_{\mathrm{rig}}(x;T)
+\:=\
+-\frac{1}{T}\\log q_T(x).
+$$
+
+Intuitively:
+
+- large $H_{\mathrm{rig}}$ means “failure before time $T$ is expensive / unlikely”,
+- small $H_{\mathrm{rig}}$ means “failure before time $T$ is cheap / likely”.
+
+Under mild axioms (monotonicity in $T$, consistency under coarse-graining,
+conservativity under surrogates), this quantity plays the role of a **canonical
+finite-horizon viability index**. Other “Synkyrian” indices are compared to
+$H_{\mathrm{rig}}$ and are considered valid if they are conservative surrogates:
+they do not overestimate the true viability.
+
+
+---
+
+## 2. From the Holding Equation to practical indices
+
+In more structured settings (e.g. open thermodynamic systems), one can express
+$H_{\mathrm{rig}}$ or its surrogates in terms of measurable flows:
+
+- support / input flux $\Phi_S(t)$,
+- dissipation / loss $\sigma(t)$,
+- effective load / resistance $L(t)$.
+
+A minimal “holding equation” has the schematic form
+
+$$
+\dot{H}(t) = \alpha N(t) - \beta L(t) H(t),
+$$
+
+with
+
+$$
+N(t) = \Phi_S(t) - \sigma(t), \qquad L(t) \ge 0,
+$$
+
+and $\alpha, \beta > 0$ parameters.  
+Here $H(t)$ is a **stock of holding** whose dynamics respect basic
+Second-Law-style constraints: net inflow increases viability, dissipation
+and load deplete it.
+
+In the Synkyrian theory:
+
+- $H_{\mathrm{rig}}$ is the canonical, probability-based index;
+- differential “holding equations” provide **mesoscopic models** that connect
+  $H$ to observable fluxes and loads in particular domains (thermodynamics,
+  networks, training dynamics, etc.).
+
+
+---
+
+## 3. Where CRQ and SCP fit in
+
+**Synkyria Monitor – Core** does *not* attempt to estimate $H_{\mathrm{rig}}$
+directly. Instead, it implements two **operational surrogates** for use on
+finite training logs:
 
 - **CRQ – Crisis Quotient**  
-  A scalar proxy for *crisis intensity*. It tracks how violently the loss
-  behaves over a short window (downside volatility, spikes, instability),
-  highlighting regimes where the run is structurally at risk.
+  A normalised measure of **downside volatility** in the loss:
+  roughly, how violently and persistently the loss spikes over a sliding window.
 
 - **SCP – Suspended Coherence Pulse**  
-  A scalar proxy for *held coherence*. It tracks how well validation performance
-  (or another viability proxy) is being “held” over a short window, even under
-  shocks. High SCP means there is still a coherent core pulse; low SCP suggests
-  structural collapse or chronic failure.
+  A normalised measure of **short-term held coherence** in validation performance:
+  roughly, how well validation accuracy is being “held” over a window despite noise.
 
-You can think of CRQ and SCP as coarse projections of the deeper hazard geometry:
+Conceptually, we think of a training run as a trajectory in a latent “hazard
+landscape”. True $H_{\mathrm{rig}}$ would be the log-hazard of failure before
+a horizon $T$; in practice, we only see a short time series of loss / accuracy.
+CRQ and SCP are designed so that:
 
-- CRQ ~ “how dense and intense are crises becoming?”  
-- SCP ~ “is there still a viable pulse that can recover after shocks?”
+- high CRQ $\Rightarrow$ **crisis intensity** is building up,
+- low SCP $\Rightarrow$ **coherence** is no longer being held.
 
-In the full Synkyrian theory, these would correspond to more refined quantities
-in a hazard-landscape or information-geometric manifold. In this v1.0.1
-software, they are deliberately kept simple and robust so that:
+The governance logic in the monitor (statuses + actions) is then calibrated so
+that:
 
-- they can be computed directly from standard training logs,
-- they are easy to read and reason about,
-- and they are conservative enough for **pilot use** in real systems.
+- **chronic high CRQ** and **low SCP** push the system toward `STOP`  
+  (structurally doomed / death spiral),
+- transient spikes in CRQ with recovering SCP are treated as shocks that can
+  be tolerated with `RISK` / `HOLDING` states.
 
-The Monitor’s governance layer (`WARMUP`, `HEALTHY`, `RISK`, `HOLDING`,
-`COLLAPSE`, `CHRONIC_FAILURE` + actions `NONE` / `REDUCE_LR` / `STOP`) is
-built on top of these indices as a pragmatic interface for early warning and
-intervention.
+From a Synkyrian viewpoint, CRQ and SCP are **finite-horizon, field-level
+symptoms** that track how close the run is to a collapse event in the
+underlying hazard geometry.
 
----
-
-## 3. Relation to other Synkyrian works
-
-The design of Synkyria Monitor is conceptually aligned with three other pillars
-of the Synkyrian–Tropic programme:
-
-1. **Synkyrian Stability (finite-horizon viability, kernels, latency)**  
-   Provides the formal framework for \(H_{\mathrm{rig}}\), kernel bottlenecks,
-   and the idea of stability as *finite-horizon holding* rather than asymptotic
-   equilibrium.
-
-2. **Tropic Information Theory (information as load)**  
-   Reframes information not as massless bits but as **load** on a finite
-   capacity field. This underpins the idea that training signals, logs, and
-   interventions all contribute to a limited carrying capacity and must be
-   filtered and governed accordingly.
-
-3. **Synkyrian Geometric Morphogenesis (hazard geometry and transitions)**  
-   Introduces a geometric reading of viability: hazard landscapes, bottlenecks,
-   and morphogenetic transitions. In this view, a training run traverses a
-   landscape where crises, recoveries, and collapses correspond to geometric
-   events.
-
-4. **Tropic Synkyria Manifesto (conceptual front end)**  
-   Summarises the conceptual stance: viability instead of equilibrium,
-   information as weight, the necessity of refusal, and form as assimilated
-   history. Synkyria Monitor is one concrete, applied “instrument” that
-   embodies these ideas for neural network training.
-
-Together, these works form a **unified story**: Synkyria Monitor is not an
-isolated heuristic, but a minimal, code-level companion to a broader
-geometric–probabilistic view of finite-horizon viability.
 
 ---
 
-## 4. Future directions
+## 4. Tropic Information Theory: information as load
 
-Version v1.0.1 is intentionally minimal. It focuses on:
+In **Tropic Information Theory**, a unit of information $x$ (an email, a batch,
+a request, an update) is not just a string but carries three key attributes:
 
-- simple indices (CRQ, SCP),
-- clear, interpretable statuses,
-- and ease of integration into existing training loops.
+- $M(x)$ – morphogenetic value (how much it contributes to a form in gestation),
+- $R(x)$ – resonance with the current field (how well it fits the current state),
+- $c(x)$ – holding cost (how much load it adds if kept).
 
-Future versions may explore:
+The field has finite capacity $K_{\max}$ and a time-dependent load $L(t)$.
+Holding information increases $L(t)$; deletion or assimilation decreases it.
 
-- tighter links between CRQ/SCP and explicit bounds on \(H_{\mathrm{rig}}\),
-- hazard-aware indices that use short-term first-passage estimates,
-- extensions to **networked / multi-model settings** (e.g. clusters, ensembles,
-  interacting services),
-- and richer dashboards that reflect the underlying **hazard geometry** more
-  directly.
+In this setting, any policy that:
 
-For now, this repository should be read as a **pilot-ready, didactic companion**:
-a way to bring finite-horizon viability thinking into everyday training practice,
-without requiring users to implement the full Synkyrian machinery.
+- keeps the field viable (no overload),
+- and achieves **non-zero morphogenetic throughput**
+
+must reject or delete a strictly positive fraction of incoming units.
+Zero deletion is equivalent either to overload or to vanishing morphogenesis.
+
+For **Synkyria Monitor**, this viewpoint appears in two ways:
+
+1. The monitor itself is an **information filter** over the training log:
+   it must ignore a large amount of harmless noise while reacting to
+   a smaller set of genuinely structural signals.
+
+2. In potential future extensions, the monitor can be combined with a
+   **Tropic load tracker** over a collection of runs, treating each run,
+   alert and intervention as a unit that carries morphogenetic value,
+   resonance and cost at the level of a research organisation or platform.
+
+
+---
+
+## 5. Synkyrian Geometric Morphogenesis
+
+The **Synkyrian Geometric Morphogenesis** work interprets $H_{\mathrm{rig}}$ and
+related indices as defining a **hazard landscape** over the state space:
+
+- valleys $\Rightarrow$ relatively safe regions,
+- saddles / necks $\Rightarrow$ bottlenecks and transition channels,
+- steep cliffs $\Rightarrow$ collapse zones.
+
+As information is held (increasing $L(t)$), the landscape is bent: cliffs sharpen,
+channels thin, and some previously viable paths become impossible.
+
+Synkyria Monitor fits into this picture as a **local probe** of the hazard
+geometry along a 1D trajectory (a single training run). It does not reconstruct
+the full manifold but tries to answer:
+
+- “Are we approaching a cliff?” (CRQ high)
+- “Is there still a coherent basin being held?” (SCP reasonably high)
+- “Has the run entered a chronic collapse regime?” (CRQ high, SCP low,
+  status `COLLAPSE` / `CHRONIC_FAILURE`)
+
+In more advanced work, one could imagine:
+
+- aggregating many runs into an empirical hazard landscape,
+- studying **morphogenetic transitions** between training regimes,
+- and connecting the Synkyria dashboard to network-level or
+  multi-kernel architectures.
+
+
+---
+
+## 6. Limitations and scope of the current implementation
+
+It is important to be explicit about the gap between theory and code:
+
+- The definitions of $H_{\mathrm{rig}}$, hazard landscapes and Tropic load are
+  **mathematically rigorous** but live at a more abstract level.
+
+- The CRQ / SCP formulas in `synkyria/monitor.py` are **practical surrogates**:
+  sliding-window statistics on loss / validation accuracy tuned to be:
+
+  - conservative (prefer false alarms over missed collapses),
+  - simple enough to understand and debug,
+  - cheap to compute inside real training loops.
+
+- Synkyria Monitor – Core v1.0.1 should therefore be read as:
+
+  > an *applied* Synkyrian companion,  
+  > grounded in a rigorous finite-horizon viability framework,  
+  > but intentionally simplified for day-to-day use.
+
+Future versions may tighten the connection to the full Synkyria theory by:
+
+- incorporating more direct hazard-style estimators,
+- adding explicit latency / queueing indices,
+- and extending from single-run monitoring to **networked / multi-kernel**
+  companions for large-scale training systems.
