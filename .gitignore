@@ -1,1 +1,20 @@
+# macOS
 .DS_Store
+__MACOSX/
+._*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Logs / outputs
+*.log
+outputs/
+runs/
